@@ -13,6 +13,10 @@ There are a few ways to use API:
 You can create an instance of the API wrapper:
 
     api = Mailchimp::API.new("your_api_key")
+    
+You can pass options to your API instance:
+
+	api = Mailchimp::API.new("your_api_key", timeout: 60, throws_exception: true)
 
 You can set your api_key globally and call class methods:
 
@@ -85,4 +89,4 @@ APIs will return a Hash with two keys "errors", a string containing some textual
 information about the error, and "code", the numeric code of the error.
 
 If you set the `throws_exceptions` boolean attribute for a given instance then
-API will attempt to intercept the errors and raise an exception.
+API will attempt to intercept the errors and raise an exception. You can also specify `throws_exception` on the API call level.
