@@ -31,6 +31,7 @@ module Mailchimp
       api_url = base_api_url + method
       params = @default_params.merge(params)
       timeout = params.delete(:timeout) || @timeout
+      throws_exceptions = params.has_key?(:throws_exceptions) ? params.delete(:throws_exceptions) : @throws_exceptions
       response = self.class.post(api_url, :body => CGI::escape(params.to_json), :timeout => timeout)
 
       begin
@@ -39,7 +40,7 @@ module Mailchimp
         response = JSON.parse('['+response.body+']').first
       end
 
-      if @throws_exceptions && response.is_a?(Hash) && response["error"]
+      if throws_exceptions && response.is_a?(Hash) && response["error"]
         raise "Error from MailChimp API: #{response["error"]} (code #{response["code"]})"
       end
 
