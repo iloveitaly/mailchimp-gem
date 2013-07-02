@@ -115,13 +115,11 @@ class ApiTest < Test::Unit::TestCase
       @returns = Struct.new(:body).new(["array", "entries"].to_json)
     end
 
-    should "throw exception if configured to and the API replies with a JSON hash containing a key called 'error'" do
+    should "does not throw exception by default and the API replies with a JSON hash containing a key called 'error'" do
       Mailchimp::API.stubs(:post).returns(Struct.new(:body).new({'error' => 'bad things'}.to_json))
       assert_nothing_raised do
         result = @api.say_hello
       end
-
-      ap result
     end
 
     should "throw exception if configured to and the API replies with a JSON hash containing a key called 'error'" do
